@@ -20,9 +20,10 @@ class Dagooberd():
                 self.last_hour = int(hour)
                 try:
                     message = self.table["Timetable"][hour][days[int(day)]]
-                    self.run_message(current, message)
                 except:
-                    pass
+                    message = "Pauze!"
+                self.run_message(current, message)
+
 
     def run_message(self, time, message):
         self.load_pygame()
@@ -46,11 +47,11 @@ class Dagooberd():
                         return
             current = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             i = 65 - (len(current)*4)/2
-            for c,char in enumerate(current):
+            for c,char in enumerate(current.lower()):
                 self.screen.blit(self.font["white"][char], (i+(4*c),22))
 
             i = 65 - (len(message)*4)/2
-            for c,char in enumerate(message):
+            for c,char in enumerate(message.lower()):
                 self.screen.blit(self.font["white"][char], (i+(4*c),28))
             pygame.transform.scale(self.screen, self.resolution, self.window)
             pygame.display.flip()
